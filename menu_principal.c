@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h> // Pour la fonction isdigit()
+#include "matiere.h"
 
 // Fonction utilisée pour vider le buffer clavier en cas de mauvaise saisie
 void vider_buffer() {
@@ -17,6 +18,14 @@ void efface_ecran() {
 #else
     system("clear");
 #endif
+}
+
+void nathanJam(void) {
+    // Vide le buffer d'entrée
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+    // Attend la nouvelle entrée
+    efface_ecran();
 }
 
 // Cette fonction nous permet de demander confirmation à l’utilisateur
@@ -103,8 +112,8 @@ void menu_principal() {
             case 2:
                 printf(">>> Vous avez choisi Gestion des matières.\n");
                 printf("Appuyez sur Entrée pour aller à la gestion des matières...");
-                getchar();
-                // Moustapha Fall : menu_matieres();
+                nathanJam();
+                Gestion_matieres();
                 break;
 
             case 3:
