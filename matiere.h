@@ -6,6 +6,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <locale.h>
+#include <wctype.h>
+#include <wchar.h>
 
 typedef struct matiere {
     int reference;
@@ -26,4 +29,3 @@ void wait_for_enter(void);
 int recherche(matiere *tableau, matiere *recherchee, int taille);
 
 #endif
-

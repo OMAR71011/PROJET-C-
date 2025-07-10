@@ -44,7 +44,14 @@ void affiche_matiere()
         printf("|%-12s | %-15s | %-11s|\n", "reference", "libelle", "coefficient");
         printf("+-------------+-----------------+------------+\n");
         for (int j = 0; j < i; j++) {
-            printf("|%-12d | %-15s | %-11hd|\n", afficher[j].reference, afficher[j].libelle, afficher[j].coeficient);
+            char libelle_aff[16];
+            strncpy(libelle_aff, afficher[j].libelle, 15);
+            libelle_aff[15] = '\0';
+            if (strlen(libelle_aff) > 15) {
+                libelle_aff[14] = '.';
+                libelle_aff[15] = '\0';
+            }
+            printf("|%-12d | %-15.15s | %-11hd|\n", afficher[j].reference, libelle_aff, afficher[j].coeficient);
             printf("+-------------+-----------------+------------+\n");
         }
     }

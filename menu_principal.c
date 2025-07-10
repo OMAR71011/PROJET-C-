@@ -1,85 +1,49 @@
+// donne/menu_principal.c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h> // Pour la fonction isdigit()
-#include "matiere.h"
+#include <ctype.h>
+#include "menu_classe.h"
+#include "affichage.h"
 
-// Fonction utilisée pour vider le buffer clavier en cas de mauvaise saisie
-void vider_buffer() {
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF);
-}
-
-// Fonction qui efface l’écran selon l’OS utilisé 
-// Cela permet un affichage plus propre du menu à chaque itération
-void efface_ecran() {
-#ifdef _WIN32
-    system("cls");
-#else
-    system("clear");
-#endif
-}
-
-void nathanJam(void) {
-    // Vide le buffer d'entrée
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF);
-    // Attend la nouvelle entrée
-    efface_ecran();
-}
-
-// Cette fonction nous permet de demander confirmation à l’utilisateur
-// avant de quitter le programme
 int confirmer_quitter() {
     char reponse[10];
-    printf("\nVoulez-vous vraiment quitter ? (oui/non) : ");
-    scanf("%3s", reponse); // On lit un mot de 3 caractères maximum
-    vider_buffer(); // On vide le buffer pour éviter des sauts de ligne restants
+    printf("\nVoulez-vous vraiment quitter ? (oui/non) \n ");
+    scanf("%3s", reponse);
+    vider_buffer();
 
-   
     return (strcmp(reponse, "oui") == 0 || strcmp(reponse, "OUI") == 0 || strcmp(reponse, "o") == 0);
 }
 
-
 int lire_choix_menu(int *choix) {
-    char buffer[100]; // On utilise un buffer pour lire la ligne entière avec fgets()
-
+    char buffer[10];
     printf("Votre choix : ");
     if (fgets(buffer, sizeof(buffer), stdin) == NULL)
-        return 0; // Problème de lecture
+        return 0;
 
-    // On enlève le saut de ligne '\n' ajouté par fgets()
     buffer[strcspn(buffer, "\n")] = '\0';
 
-    // On vérifie que chaque caractère est un chiffre
     for (int i = 0; buffer[i] != '\0'; i++) {
         if (!isdigit((unsigned char)buffer[i])) {
-            // Si on trouve une lettre, un symbole, ou espace, on considère l’entrée invalide
             return 0;
         }
     }
 
-    // Si la chaîne ne contient que des chiffres, on la convertit en entier
     int valeur = atoi(buffer);
-
-    // On vérifie que le choix est bien entre 1 et 5, comme dans notre menu
-    if (valeur < 1 || valeur > 5) {
+    if (valeur < 1 || valeur > 5)
         return 0;
-    }
 
-    *choix = valeur; // Si tout est bon  on retourne la valeur via pointeur
-    return 1; // Choix valide
+    *choix = valeur;
+    return 1;
 }
 
-// Fonction principale du menu
 void menu_principal() {
     int choix;
     int quitter = 0;
 
-    
     while (!quitter) {
-        efface_ecran(); 
-        // Affichage du menu principal
+        efface_ecran();
+
         printf("========== MENU PRINCIPAL ==========\n");
         printf("1. Gestion des étudiants\n");
         printf("2. Gestion des matières\n");
@@ -88,65 +52,47 @@ void menu_principal() {
         printf("5. Quitter\n");
         printf("====================================\n");
 
-        // Ici au lieu d’utiliser scanf (qui peut être dangereux), on passe par notre propre fonction
-        // Elle vérifie que l’entrée est un entier et rien d’autre
         if (!lire_choix_menu(&choix)) {
-            
-            printf("\nEntrée invalide. Veuillez entrer un choix {entre 1 et 5 }.\n");
-            printf("Appuyez sur Entrée pour continuer...");
-            getchar(); // On attend que l'utilisateur appuie sur Entrée
-            continue; // On revient au début de la boucle
+            printf("\nEntrée invalide. Veuillez entrer un choix entre 1 et 5.\n");
+            printf("Appuyez sur Entrée pour recommencer...");
+            vider_buffer();
+            getchar();
+            continue;
         }
 
-        
         printf("\n");
 
         switch (choix) {
             case 1:
                 printf(">>> Vous avez choisi Gestion des étudiants.\n");
-                printf("Appuyez sur Entrée pour aller à la gestion des étudiants...");
+                printf("Appuyez sur Entrée pour y acceder...");
                 getchar();
-                // Serigne Saliou GNINGUE : menu_etudiants();
+                menu_etudiant();
                 break;
-
             case 2:
                 printf(">>> Vous avez choisi Gestion des matières.\n");
-                printf("Appuyez sur Entrée pour aller à la gestion des matières...");
-                nathanJam();
-                Gestion_matieres();
+                printf("Appuyez sur Entrée pour y acceder...");
+                getchar();
+                menu_matiere();
                 break;
-
             case 3:
                 printf(">>> Vous avez choisi Gestion des classes.\n");
-                printf("Appuyez sur Entrée pour aller à la gestion des classes...");
+                printf("Appuyez sur Entrée pour y acceder...");
                 getchar();
-                // Omar Aminata Diop : menu_classes();
+                menu_classe();
                 break;
-
             case 4:
                 printf(">>> Vous avez choisi Gestion des notes.\n");
-                printf("Appuyez sur Entrée pour aller à la gestion des notes...");
+                printf("Appuyez sur Entrée pour y acceder...");
                 getchar();
-                // Pape Moussa Gassama : menu_notes();
+                menu_notes();
                 break;
-
             case 5:
-                // Demande confirmation pour quitter
                 if (confirmer_quitter()) {
-                    printf("\nMerci d’avoir utilisé le programme.\n");
-                    quitter = 1; // On quitte la boucle
-                } else {
-                    printf("\nRetour au menu principal...\n");
-                    printf("Appuyez sur Entrée pour continuer...");
-                    getchar();
+                    printf("Merci d'avoir utilisé le programme.\n");
+                    quitter = 1;
                 }
                 break;
         }
     }
-}
-
-
-int main() {
-    menu_principal(); // Lancement du menu principal
-    return 0;
 }
