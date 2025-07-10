@@ -7,7 +7,7 @@
 #include <unistd.h>
 #endif
 
-void clear_screen(void) {
+void clear_screen_ship(void) {
     #ifdef _WIN32
     system("cls");
     #else
@@ -22,5 +22,5 @@ void wait_for_enter(void) {
     while ((c = getchar()) != '\n' && c != EOF);
     // Attend la nouvelle entrée
     getchar();
-    clear_screen();
+    clear_screen_ship();
 }

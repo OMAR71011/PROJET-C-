@@ -1,7 +1,5 @@
 #include "matiere.h"
-#include <locale.h>
-#include <wctype.h>
-#include <wchar.h>
+
 
 void Ajout_matiere()
 {

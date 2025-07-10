@@ -3,8 +3,16 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include "menu_principal.h"
 #include "menu_classe.h"
 #include "affichage.h"
+#include "matiere.h"
+#include "ssg_header.h" // Pour menu_etudiant
+
+// Prototypes des fonctions utilisées
+void menu_etudiant();
+void menu_matiere();
+void menu_notes();
 
 int confirmer_quitter() {
     char reponse[10];
@@ -36,6 +44,7 @@ int lire_choix_menu(int *choix) {
     *choix = valeur;
     return 1;
 }
+
 
 void menu_principal() {
     int choix;
@@ -73,7 +82,7 @@ void menu_principal() {
                 printf(">>> Vous avez choisi Gestion des matières.\n");
                 printf("Appuyez sur Entrée pour y acceder...");
                 getchar();
-                menu_matiere();
+                Gestion_matieres();
                 break;
             case 3:
                 printf(">>> Vous avez choisi Gestion des classes.\n");
@@ -85,7 +94,7 @@ void menu_principal() {
                 printf(">>> Vous avez choisi Gestion des notes.\n");
                 printf("Appuyez sur Entrée pour y acceder...");
                 getchar();
-                menu_notes();
+                gestion_note();
                 break;
             case 5:
                 if (confirmer_quitter()) {

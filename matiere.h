@@ -10,6 +10,7 @@
 #include <wctype.h>
 #include <wchar.h>
 
+
 typedef struct matiere {
     int reference;
     char libelle[15];

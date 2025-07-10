@@ -12,7 +12,7 @@ void Gestion_matieres()
             if (scanf("%31s", buffer) != 1) 
             {
                 system("clear");
-            menu_principal_matiere();
+                menu_principal_matiere();
                 printf("\nSaisie invalide\n");
                 while (getchar() != '\n');
                 printf("Veuillez choisir le numéro de l'option que tu souhaites effectuer : ");
@@ -51,11 +51,6 @@ void Gestion_matieres()
                 affiche_matiere();
                 break;
             case 0:
-                printf("||~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~||\n"
-                       "||*********************************************||\n"
-                       "||-----------------AU REVOIR!------------------||\n"
-                       "||*********************************************||\n"
-                       "||~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~||\n\n");
                 break;
             default:
                 system("clear");
